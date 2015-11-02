@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	   http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+	   http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+	   ">
+
+<!-- 	Transaction manager for a single JDBC DataSource -->
+	<bean id="iaTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="iaDataSource"/>
+	</bean>	
+	
+	<!-- SqlMap setup for iBATIS Database Layer -->
+	<bean id="iaSqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:/sql-map-config.xml"/>
+		<property name="dataSource" ref="iaDataSource"/>
+	</bean>
+
+	<bean id="iaSqlMapClientTemplate" class="org.springframework.orm.ibatis.SqlMapClientTemplate">
+		<property name="sqlMapClient" ref="iaSqlMapClient"/>
+	</bean>
+
+	<!-- Annotation 을 사용한 트랜잭션 사용시 활성화 -->
+	<tx:annotation-driven transaction-manager="iaTransactionManager"></tx:annotation-driven>
+</beans>

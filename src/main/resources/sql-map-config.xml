@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
+		"http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+	<settings useStatementNamespaces="true" />
+
+	<!-- 
+	<typeAlias type="com.nhncorp.lucy.spring.core.util.DataMap" alias="dmap"/>
+	<typeAlias alias="product" type="com.nhn.ncloud.admin.product.model.Product"/>
+	<typeAlias alias="promotion" type="com.nhn.ncloud.admin.product.model.Promotion"/>
+	<typeAlias alias="promotionDiscount" type="com.nhn.ncloud.admin.product.model.PromotionDiscount"/>
+	 -->
+	
+	<!-- ibatis 2.3.4 726부터 해당 값은 사용되지 않는다. 설정하지 말것. Transaction의 제한은 datasource의 
+		갯수에 달렸음. <settings maxTransactions="20" maxRequests="32" maxSessions="10" 
+		/> -->
+
+	<!-- spring을 통해 설정되므로 transaction Manager 및 datasource는 설정하지 않는다. <transactionManager 
+		type="JDBC"> <dataSource type="SIMPLE"> </dataSource> </transactionManager> -->
+
+	<!-- sqlMap.xml 을 추가한다. -->
+	<sqlMap resource="sqlmap/invisibleAffiliates.xml" />
+ </sqlMapConfig>

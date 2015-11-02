@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com/DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="invisibleAffiliates">
+
+	
+	<typeAlias alias="HomeModel" type="com.sx.ia.service.model.HomeModel"/>
+	
+	<resultMap id="homeModelResultMap" class="HomeModel">
+	    <result property="data" column="data_str"/>
+	</resultMap>
+	
+	<select id="selectData" resultMap="homeModelResultMap" >
+		 SELECT /* selectData */
+		 	data_str
+		 FROM
+		 	home_data
+	</select>
+	
+	
+	<!--
+	<select id="selectHaProxyInfo" parameterClass="map" resultMap="haProxyInfoResultMap">
+		SELECT /* selectHaProxyInfo */
+			UNIQUE 
+		    NVL(haproxy.haproxy_ip_meta_no, 0) AS haproxy_ip_meta_no,
+		    haproxy.publc_ip,     
+		    NVL(instc.mbr_no, 0) AS mbr_no,
+		    NVL(svr.instc_no, 0) AS instc_no,
+		    svr.svr_nm,
+		    svr.nsi_nm,
+		    svr.intnl_ip,
+		    NVL(svr.cpu_cnt, 0) AS cpu_cnt,
+		    NVL(svr.mem_sz, 0) AS mem_sz,
+		    instc.instc_stat_cd,
+		    instc.op_cd
+	    FROM
+       		nt_haproxy_ip haproxy,
+	        nt_svr_instc svr,
+	        nt_instc instc
+        WHERE
+        	haproxy.instc_no = svr.instc_no
+        	AND svr.instc_no = instc.instc_no
+	    	<isNotEmpty prepend="AND"  property="publicIp">
+	    		haproxy.publc_ip = #publicIp#
+	    	</isNotEmpty>
+	</select>
+	
+	<insert id="insertHaProxyIp" parameterClass="map">
+    	/* insertHaProxyIp */
+    	INSERT INTO nt_haproxy_ip 
+    		(haproxy_ip_meta_no, publc_ip) 
+    	VALUES 
+    		(#haProxyIpMetaNo#, #publicIp#)
+	</insert>
+	
+	<insert id="insertHaProxyIpMeta" parameterClass="map">
+    	/* insertHaProxyIpMeta */
+    	INSERT INTO nt_haproxy_ip_meta 
+    		(cnc_no, sbntwk_nm, gtwy_ip) 
+    	VALUES 
+    		(#cncNo#, #subnet#, #gatewayIp#)
+	</insert>
+	
+	<select id="selectHaProxyIpMetaNo" parameterClass="map" resultClass="int">
+		SELECT /* selectHaProxyIpMetaNo */
+			haproxy_ip_meta_no
+		FROM
+			nt_haproxy_ip_meta
+		WHERE
+			cnc_no = #cncNo#
+			AND sbntwk_nm = #subnet#
+			<isNotEmpty prepend="AND"  property="gatewayIp">
+				gtwy_ip = #gatewayIp#
+			</isNotEmpty>
+	</select>
+	-->
+	 
+</sqlMap>
