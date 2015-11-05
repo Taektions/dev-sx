@@ -20,5 +20,5 @@
 		type="JDBC"> <dataSource type="SIMPLE"> </dataSource> </transactionManager> -->
 
 	<!-- sqlMap.xml 을 추가한다. -->
-	<sqlMap resource="sqlmap/invisibleAffiliates.xml" />
+	<sqlMap resource="sqlmap/member.xml" />
  </sqlMapConfig>

@@ -23,6 +23,20 @@
 	<!-- <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"></context:include-filter> -->
 	<!-- </context:component-scan> -->
 	
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="smtp.gmail.com" />
+        <property name="port" value="587" />
+        <property name="username" value="ocm.customer.service@gmail.com" />
+        <property name="password" value="ocm!@#123" />
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.transport.protocol">smtp</prop>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+            </props>
+        </property>
+    </bean>
+	
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<bean id="jspViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
@@ -30,6 +44,6 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 	
-	<context:component-scan base-package="com.sx.ia" />
+	<context:component-scan base-package="com.sx.ally" />
 	
 </beans>

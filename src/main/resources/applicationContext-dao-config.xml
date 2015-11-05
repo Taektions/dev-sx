@@ -9,20 +9,20 @@
 	   ">
 
 <!-- 	Transaction manager for a single JDBC DataSource -->
-	<bean id="iaTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="iaDataSource"/>
+	<bean id="allyTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="allyDataSource"/>
 	</bean>	
 	
 	<!-- SqlMap setup for iBATIS Database Layer -->
-	<bean id="iaSqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+	<bean id="allySqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
 		<property name="configLocation" value="classpath:/sql-map-config.xml"/>
-		<property name="dataSource" ref="iaDataSource"/>
+		<property name="dataSource" ref="allyDataSource"/>
 	</bean>
 
-	<bean id="iaSqlMapClientTemplate" class="org.springframework.orm.ibatis.SqlMapClientTemplate">
-		<property name="sqlMapClient" ref="iaSqlMapClient"/>
+	<bean id="allySqlMapClientTemplate" class="org.springframework.orm.ibatis.SqlMapClientTemplate">
+		<property name="sqlMapClient" ref="allySqlMapClient"/>
 	</bean>
 
 	<!-- Annotation 을 사용한 트랜잭션 사용시 활성화 -->
-	<tx:annotation-driven transaction-manager="iaTransactionManager"></tx:annotation-driven>
+	<tx:annotation-driven transaction-manager="allyTransactionManager"></tx:annotation-driven>
 </beans>

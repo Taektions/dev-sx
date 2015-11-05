@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com/DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
-<sqlMap namespace="invisibleAffiliates">
+<sqlMap namespace="member">
 
 	
-	<typeAlias alias="HomeModel" type="com.sx.ia.service.model.HomeModel"/>
+	<typeAlias alias="member" type="com.sx.ally.service.model.Member"/>
 	
-	<resultMap id="homeModelResultMap" class="HomeModel">
+	<resultMap id="memberResultMap" class="member">
 	    <result property="data" column="data_str"/>
 	</resultMap>
 	
-	<select id="selectData" resultMap="homeModelResultMap" >
+	<select id="selectData" resultMap="memberResultMap" >
 		 SELECT /* selectData */
 		 	data_str
 		 FROM

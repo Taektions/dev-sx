@@ -11,8 +11,16 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.sx.ia">
+	<logger name="com.sx.ally">
 		<level value="info" />
+	</logger>
+	
+	<logger name="com.sx.ally">
+		<level value="debug" />
+	</logger>
+	
+	<logger name="com.sx.ally">
+		<level value="error" />
 	</logger>
 	
 	<!-- 3rdparty Loggers -->

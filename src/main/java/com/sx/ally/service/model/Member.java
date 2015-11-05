@@ -1,7 +1,7 @@
-package com.sx.ia.service.model;
+package com.sx.ally.service.model;
 
 
-public class HomeModel {
+public class Member {
 	
 	private String data;
 
