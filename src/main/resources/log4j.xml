@@ -9,40 +9,69 @@
 			<param name="ConversionPattern" value="%-5p: %c - %m%n" />
 		</layout>
 	</appender>
-	
-	<!-- Application Loggers -->
-	<logger name="com.sx.ally">
-		<level value="info" />
+
+	<logger name="com.sx.ally" additivity="false">
+		<level value="DEBUG" />
+		<appender-ref ref="console" />
 	</logger>
 	
-	<logger name="com.sx.ally">
-		<level value="debug" />
-	</logger>
-	
-	<logger name="com.sx.ally">
-		<level value="error" />
-	</logger>
-	
-	<!-- 3rdparty Loggers -->
-	<logger name="org.springframework.core">
-		<level value="info" />
-	</logger>
-	
-	<logger name="org.springframework.beans">
-		<level value="info" />
-	</logger>
-	
-	<logger name="org.springframework.context">
-		<level value="info" />
+	<logger name="com.sx" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="console" />
 	</logger>
 
-	<logger name="org.springframework.web">
-		<level value="info" />
+	<logger name="java.sql.Connection" additivity="false">
+		<level value="DEBUG" />
+		<appender-ref ref="console" />
 	</logger>
 
-	<!-- Root Logger -->
+	<logger name="java.sql.Statement" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="console" />
+	</logger>
+
+	<logger name="java.sql.PreparedStatement" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="console" />
+	</logger>
+
+	<logger name="java.sql.ResultSet" additivity="false">
+		<level value="DEBUG" />
+		<appender-ref ref="console" />
+	</logger>		
+	
+	<logger name="com.ibatis" additivity="false">
+		<level value="DEBUG" />
+		<appender-ref ref="console" />
+	</logger>
+	
+	<logger name="com.ibatis.common.jdbc.logging" additivity="false">
+		<level value="DEBUG" />
+		<appender-ref ref="console" />
+	</logger>
+
+	<logger name="oauth" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="console" />
+	</logger>
+
+	<logger name="org" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="console" />
+	</logger>
+	
+	<logger name="org.springframework" additivity="false">
+		<level value="ERROR" />
+		<appender-ref ref="console" />
+	</logger>
+
+	<logger name="com.ntruss" additivity="false">
+		<level value="DEBUG" />
+		<appender-ref ref="console" />
+	</logger>
+	
 	<root>
-		<priority value="warn" />
+		<level value="DEBUG" />
 		<appender-ref ref="console" />
 	</root>
 	

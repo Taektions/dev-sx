@@ -23,6 +23,13 @@
 	<!-- <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"></context:include-filter> -->
 	<!-- </context:component-scan> -->
 	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/service/**" />
+			<bean class="com.sx.ally.common.interceptor.AllyInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
         <property name="host" value="smtp.gmail.com" />
         <property name="port" value="587" />

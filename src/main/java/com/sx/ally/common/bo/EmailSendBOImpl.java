@@ -1,12 +1,20 @@
 package com.sx.ally.common.bo;
 
+import java.util.Map;
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.Session;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailException;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+
+import com.sx.ally.common.AllyParamConstants;
 
 @Service
 public class EmailSendBOImpl implements EmailSendBO {
@@ -19,13 +27,17 @@ public class EmailSendBOImpl implements EmailSendBO {
 	@Override
 	public boolean sendEmail(String recipientAddress, String subject, String message) {
 		try {
-			SimpleMailMessage email = new SimpleMailMessage();
-	        email.setTo(recipientAddress);
-	        email.setSubject(subject);
-	        email.setText(message);
+	        Session mailSession = Session.getDefaultInstance(new Properties(), null);
+	        mailSession.setDebug(true);
+
+	        MimeMessage mimeMessage = new MimeMessage(mailSession);
+	        mimeMessage.setSubject(subject);
+	        mimeMessage.setFrom(new InternetAddress("ally@ally.com"));
+	        mimeMessage.setContent(message, "text/html;charset=UTF-8");
+	        mimeMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(recipientAddress));
+	        mailSender.send(mimeMessage);
 	        
-	        mailSender.send(email);
-		} catch (MailException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			LOGGER.error("에러: " + e);
 			return false;
@@ -35,9 +47,15 @@ public class EmailSendBOImpl implements EmailSendBO {
 	}
 
 	@Override
-	public boolean sendCertificationEmail(String recipientAddress) {
+	public boolean sendCertificationEmail(Map<String, Object> paramMap) {
+		String recipientAddress = (String) paramMap.get(AllyParamConstants.PARAM_MEMBER_LOGIN_ID);
+		String crtCode = (String) paramMap.get(AllyParamConstants.PARAM_CERTIFICATION_CODE);
+		
 		String subject = "회원가입 인증메일 입니다.";
-		String message = "";
+		String message = "<p><span style='color: rgb(99, 99, 99);'>안녕하세요.</span></p><p><br></p>"
+				+ "<p><span style='color: rgb(99, 99, 99);'>귀하의 가입인증을 위한 인증코드 입니다.</span></p>"
+				+ "<p><b><span style='font-size: 14pt; color: rgb(0, 117, 200);'>[" + crtCode + "]</span></b></p>"
+				+ "<p><br></p><p><span style='color: rgb(99, 99, 99);'>ALLY TEAM.</span></p>";
 		
 		return sendEmail(recipientAddress, subject, message);
 	}

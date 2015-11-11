@@ -1,7 +1,17 @@
 package com.sx.ally.service.bo;
 
+import java.util.List;
+import java.util.Map;
+
 import com.sx.ally.service.model.Member;
 
 public interface MemberBO {
-	public Member getData();
+
+	public List<Member> getMemberList(Map<String, Object> paramMap);
+
+	public boolean applyCertificationCode(String emailAddress);
+
+	public Map<String, Object> certificationMember(Map<String, Object> paramMap);
+
+	public boolean validateMemberCertificationInfo(String loginID, String certificationCode);
 }

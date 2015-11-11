@@ -2,76 +2,159 @@
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com/DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
 <sqlMap namespace="member">
 
-	
 	<typeAlias alias="member" type="com.sx.ally.service.model.Member"/>
+	<typeAlias alias="memberEmailCertificationInfo" type="com.sx.ally.service.model.MemberEmailCertificationInfo"/>
 	
 	<resultMap id="memberResultMap" class="member">
-	    <result property="data" column="data_str"/>
+	    <result property="memberNo" column="mbr_no"/>
+	    <result property="loginID" column="login_id"/>
+	    <result property="sex" column="sex"/>
+	    <result property="ageGroup" column="age_grp"/>
+	    <result property="companyNo" column="co_no"/>
+	    <result property="companyName" column="co_nm"/>
+	</resultMap>
+	<resultMap id="memberEmailCrtInfoResultMap" class="memberEmailCertificationInfo">
+		<result property="emailAddress" column="email_addr"/>
+		<result property="certificationCode" column="crt_cd"/>
+		<result property="certificationCodeIssuedYmdt" column="crt_cd_isue_ymdt"/>
 	</resultMap>
 	
-	<select id="selectData" resultMap="memberResultMap" >
-		 SELECT /* selectData */
-		 	data_str
-		 FROM
-		 	home_data
-	</select>
-	
-	
-	<!--
-	<select id="selectHaProxyInfo" parameterClass="map" resultMap="haProxyInfoResultMap">
-		SELECT /* selectHaProxyInfo */
-			UNIQUE 
-		    NVL(haproxy.haproxy_ip_meta_no, 0) AS haproxy_ip_meta_no,
-		    haproxy.publc_ip,     
-		    NVL(instc.mbr_no, 0) AS mbr_no,
-		    NVL(svr.instc_no, 0) AS instc_no,
-		    svr.svr_nm,
-		    svr.nsi_nm,
-		    svr.intnl_ip,
-		    NVL(svr.cpu_cnt, 0) AS cpu_cnt,
-		    NVL(svr.mem_sz, 0) AS mem_sz,
-		    instc.instc_stat_cd,
-		    instc.op_cd
-	    FROM
-       		nt_haproxy_ip haproxy,
-	        nt_svr_instc svr,
-	        nt_instc instc
-        WHERE
-        	haproxy.instc_no = svr.instc_no
-        	AND svr.instc_no = instc.instc_no
-	    	<isNotEmpty prepend="AND"  property="publicIp">
-	    		haproxy.publc_ip = #publicIp#
+	<select id="selectMember" resultMap="memberResultMap">
+		/* selectMember */
+		SELECT
+			mbr.mbr_no,
+			mbr.login_id,
+			mbr.sex,
+			mbr.age_grp,
+			co.co_no,
+			co.co_nm
+		FROM
+			ally_mbr mbr,
+			ally_co co
+		WHERE
+			mbr.co_no = co.co_no
+			<isNotEmpty prepend="AND"  property="memberNo">
+	    		mbr.mbr_no = #memberNo#
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="AND"  property="loginID">
+	    		mbr.login_id = #loginID#
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="AND"  property="sex">
+	    		mbr.sex = #sex#
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="AND"  property="ageGroup">
+	    		mbr.age_grp = #ageGroup#
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="AND"  property="companyNo">
+	    		mbr.co_no = #companyNo#
 	    	</isNotEmpty>
 	</select>
 	
-	<insert id="insertHaProxyIp" parameterClass="map">
-    	/* insertHaProxyIp */
-    	INSERT INTO nt_haproxy_ip 
-    		(haproxy_ip_meta_no, publc_ip) 
-    	VALUES 
-    		(#haProxyIpMetaNo#, #publicIp#)
-	</insert>
-	
-	<insert id="insertHaProxyIpMeta" parameterClass="map">
-    	/* insertHaProxyIpMeta */
-    	INSERT INTO nt_haproxy_ip_meta 
-    		(cnc_no, sbntwk_nm, gtwy_ip) 
-    	VALUES 
-    		(#cncNo#, #subnet#, #gatewayIp#)
-	</insert>
-	
-	<select id="selectHaProxyIpMetaNo" parameterClass="map" resultClass="int">
-		SELECT /* selectHaProxyIpMetaNo */
-			haproxy_ip_meta_no
+	<select id="selectMemberCount" resultClass="int">
+		/* selectMemberCount */
+		SELECT
+			COUNT(*)
 		FROM
-			nt_haproxy_ip_meta
+			ally_mbr
 		WHERE
-			cnc_no = #cncNo#
-			AND sbntwk_nm = #subnet#
-			<isNotEmpty prepend="AND"  property="gatewayIp">
-				gtwy_ip = #gatewayIp#
-			</isNotEmpty>
+			1=1
+			<isNotEmpty prepend="AND"  property="memberNo">
+	    		mbr_no = #memberNo#
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="AND"  property="loginID">
+	    		login_id = #loginID#
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="AND"  property="sex">
+	    		sex = #sex#
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="AND"  property="ageGroup">
+	    		age_grp = #ageGroup#
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="AND"  property="companyNo">
+	    		co_no = #companyNo#
+	    	</isNotEmpty>
 	</select>
-	-->
-	 
+	
+	<insert id="insertMember" parameterClass="hashmap">
+		/* insertMember */
+		INSERT INTO
+			ally_mbr
+			(
+				login_id,
+				sex,
+				age_grp,
+				co_no
+			)
+		VALUES
+			(
+				#loginID#,
+				#sex#,
+				#ageGroup#,
+				#companyNo#
+			)
+	</insert>
+	
+	<select id="selectMemberEmailCertificationInfo" parameterClass="hashmap" resultMap="memberEmailCrtInfoResultMap">
+    	/* selectMemberEmailCertificationInfo */
+    	SELECT
+			email_addr,
+			crt_cd,
+			crt_cd_isue_ymdt
+		FROM
+			ally_mbr_email_crt
+		WHERE
+			1=1
+			<isNotEmpty prepend="AND"  property="loginID">
+	    		email_addr = #loginID#
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="AND"  property="certificationCode">
+	    		crt_cd = #certificationCode#
+	    	</isNotEmpty>
+	</select>
+	
+	<select id="selectMemberEmailCertificationInfoCount" parameterClass="hashmap" resultClass="int">
+    	/* selectMemberEmailCertificationInfoCount */
+    	SELECT
+			COUNT(*)
+		FROM
+			ally_mbr_email_crt
+		WHERE
+			1=1
+			<isNotEmpty prepend="AND"  property="loginID">
+	    		email_addr = #loginID#
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="AND"  property="certificationCode">
+	    		crt_cd = #certificationCode#
+	    	</isNotEmpty>
+	</select>	
+	
+	<insert id="insertMemberEmailCertificationInfo" parameterClass="hashmap">
+    	/* insertMemberEmailCertificationInfo */
+    	INSERT INTO 
+    		ally_mbr_email_crt
+    		(
+    			email_addr,
+				crt_cd,
+				crt_cd_isue_ymdt
+			) 
+    	VALUES 
+    		(
+    			#loginID#,
+    			#certificationCode#,
+				SYSDATETIME
+			)
+	</insert>
+	
+	<update id="updateMemberEmailCertificationInfo" parameterClass="hashmap">
+    	/* updateMemberEmailCertificationInfo */
+    	UPDATE
+			ally_mbr_email_crt
+		SET
+			email_addr = #loginID#,
+			crt_cd = #certificationCode#,
+			crt_cd_isue_ymdt = SYSDATETIME
+		WHERE
+			email_addr = #loginID#
+	</update>
+	
 </sqlMap>
