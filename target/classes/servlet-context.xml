@@ -25,7 +25,7 @@
 	
 	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/service/**" />
+			<mvc:mapping path="/service_test/**" />
 			<bean class="com.sx.ally.common.interceptor.AllyInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>

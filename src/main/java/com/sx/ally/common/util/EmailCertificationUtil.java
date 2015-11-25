@@ -11,14 +11,11 @@ public class EmailCertificationUtil {
 	
 	public static String getCertificationCode() {
 		
-		String crtCode = "";
-		
-		Random oRandom = new Random();
-		
+		String crtCode = "";		
+		Random oRandom = new Random();		
 		for(int loop = 0; loop <6; loop++) {
 			crtCode += oRandom.nextInt(10);
-		}
-		
+		}		
 	    
 		logger.info("issued certification code : " + crtCode);		
 		return crtCode;

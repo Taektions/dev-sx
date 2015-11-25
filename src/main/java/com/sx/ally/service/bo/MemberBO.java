@@ -9,9 +9,10 @@ public interface MemberBO {
 
 	public List<Member> getMemberList(Map<String, Object> paramMap);
 
-	public boolean applyCertificationCode(String emailAddress);
+	public boolean applyCertificationCode(Map<String, Object> paramMap);
 
 	public Map<String, Object> certificationMember(Map<String, Object> paramMap);
 
 	public boolean validateMemberCertificationInfo(String loginID, String certificationCode);
+
 }

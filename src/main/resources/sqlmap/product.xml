@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com/DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="product">
+
+	<typeAlias alias="product" type="com.sx.ally.service.model.Product"/>
+	
+	<resultMap id="productResultMap" class="product">
+	    <result property="productNo" column="prod_no"/>
+	    <result property="productName" column="prod_nm"/>
+	    <result property="categoryCode" column="prod_cat_cd"/>
+	    <result property="producDescription" column="prod_desc"/>
+	    <result property="affiliateStartYmdt" column="afflat_strt_ymdt"/>
+	    <result property="affiliateEndYmdt" column="afflat_end_ymdt"/>
+	    <result property="productDiscountPercent" column="prod_dc_pct"/>
+	    <result property="affiliateShopNo" column="shop_no"/>
+	</resultMap>
+	
+	<select id="selectProductList" resultMap="productResultMap">
+		/* selectProductList */
+		SELECT
+			prod_no,
+			prod_nm,
+			prod_cat_cd,
+			prod_desc,
+			afflat_strt_ymdt,
+			afflat_end_ymdt,
+			prod_dc_pct,
+			shop_no
+		FROM
+			ally_prod
+		WHERE
+			1=1
+			<isNotEmpty prepend="AND"  property="productNo">
+	    		prod_no = #productNo#
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="AND"  property="productName">
+	    		prod_nm = #productName#
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="AND"  property="categoryCode">
+	    		prod_cat_cd = #categoryCode#
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="AND"  property="producDescription">
+	    		prod_desc = #producDescription#
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="AND"  property="affiliateStartYmdt">
+	    		TO_CHAR(afflat_strt_ymdt,'YYYY-MM-DD') = #affiliateStartYmdt#
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="AND"  property="affiliateEndYmdt">
+	    		TO_CHAR(afflat_end_ymdt,'YYYY-MM-DD') = #affiliateEndYmdt#
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="AND"  property="productDiscountPercent">
+	    		prod_dc_pct = #productDiscountPercent#
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="AND"  property="affiliateShopNo">
+	    		shop_no = #affiliateShopNo#
+	    	</isNotEmpty>
+	</select>
+	
+	<insert id="insertProduct" parameterClass="hashmap">
+	/* insertProduct */
+	INSERT INTO
+		ally_prod (
+			prod_nm,
+			prod_cat_cd,
+			prod_desc,
+			afflat_strt_ymdt,
+			afflat_end_ymdt,
+			prod_dc_pct,
+			shop_no
+		)
+		VALUES
+		(
+			#productName#,
+			#categoryCode#,
+			#producDescription#,
+			SYSDATETIME, /* affiliateStartYmdt */
+			SYSDATETIME, /* affiliateEndYmdt */
+			#productDiscountPercent#,
+			#affiliateShopNo#
+		);
+	</insert>
+</sqlMap>

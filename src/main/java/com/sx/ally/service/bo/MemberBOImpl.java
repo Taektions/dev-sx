@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.taglibs.standard.tag.common.core.ParamParent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sx.ally.common.AllyParamConstants;
 import com.sx.ally.common.bo.EmailSendBO;
-import com.sx.ally.common.util.CommonUtils;
 import com.sx.ally.common.util.EmailCertificationUtil;
 import com.sx.ally.service.dao.MemberDAO;
 import com.sx.ally.service.model.Member;
@@ -41,7 +38,7 @@ public class MemberBOImpl implements MemberBO{
 	public boolean validateMemberCertificationInfo(String loginID, String certificationCode) {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put(AllyParamConstants.PARAM_MEMBER_LOGIN_ID, loginID);
-		paramMap.put(AllyParamConstants.PARAM_CERTIFICATION_CODE, certificationCode);
+		paramMap.put(AllyParamConstants.PARAM_MEMBER_CERTIFICATION_CODE, certificationCode);
 		
 		int certificationInfoCount = memberDAO.selectMemberEmailCertificationInfoCount(paramMap);
 		int memberCount = memberDAO.selectMemberCount(paramMap);
@@ -54,15 +51,13 @@ public class MemberBOImpl implements MemberBO{
 
 	@Transactional
 	@Override
-	public boolean applyCertificationCode(String emailAddress) {
+	public boolean applyCertificationCode(Map<String, Object> paramMap) {
 		try {
-			Map<String, Object> paramMap = new HashMap<String, Object>();		
 			
 			String crtCode = EmailCertificationUtil.getCertificationCode();
+			paramMap.put(AllyParamConstants.PARAM_MEMBER_CERTIFICATION_CODE, crtCode);
 			
-			paramMap.put(AllyParamConstants.PARAM_MEMBER_LOGIN_ID, emailAddress);
-			paramMap.put(AllyParamConstants.PARAM_CERTIFICATION_CODE, crtCode);
-			
+			String emailAddress = (String) paramMap.get(AllyParamConstants.PARAM_MEMBER_LOGIN_ID);			
 			int memberCrtInfoCount = memberDAO.selectMemberEmailCertificationInfoCount(emailAddress);
 			
 			int insertUpdateResult = 0;
@@ -90,11 +85,11 @@ public class MemberBOImpl implements MemberBO{
 	@Override
 	public Map<String, Object> certificationMember(Map<String, Object> paramMap) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		result.put("isSuccess", false);
+		result.put(AllyParamConstants.PARAM_RESULT_IS_SUCCESS, false);
 		
 		MemberEmailCertificationInfo certificationInfo = memberDAO.selectMemberEmailCertificationInfo(paramMap);
 		if (certificationInfo == null) {
-			result.put("resultMsg", "인증번호가 일치하지 않습니다.");
+			result.put(AllyParamConstants.PARAM_RESULT_MESSAGE, "인증번호가 일치하지 않습니다.");
 			return result;
 		}
 		
@@ -110,12 +105,12 @@ public class MemberBOImpl implements MemberBO{
 				memberDAO.insertMember(paramMap);
 			}
 			
-			result.put("isSuccess", true);
+			result.put("loginKey", (String) paramMap.get(AllyParamConstants.PARAM_MEMBER_CERTIFICATION_CODE));
+			result.put(AllyParamConstants.PARAM_RESULT_IS_SUCCESS, true);
 		} else {
-			result.put("resultMsg", "인증번호 유효시간을 초과하였습니다. 인증번호를 다시 발급받아 주세요.");
+			result.put(AllyParamConstants.PARAM_RESULT_MESSAGE, "인증번호 유효시간을 초과하였습니다. 인증번호를 다시 발급받아 주세요.");
 		}
 		
 		return result;
 	}
-
 }

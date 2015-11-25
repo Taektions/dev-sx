@@ -77,6 +77,5 @@ public class MemberDAOImpl implements MemberDAO{
 	@Override
 	public int updateMemberEmailCertificationInfo(Map<String, Object> paramMap) {
 		return getSqlMapClientTemplate().update(NAMESPACE + "updateMemberEmailCertificationInfo", paramMap);
-	}
-	
+	}	
 }

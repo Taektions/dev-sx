@@ -25,10 +25,5 @@ public interface MemberDAO {
 	public int insertMemberEmailCertificationInfo(Map<String, Object> paramMap);
 	
 	public int updateMemberEmailCertificationInfo(Map<String, Object> paramMap);
-
-	
-
-	
-
 	
 }

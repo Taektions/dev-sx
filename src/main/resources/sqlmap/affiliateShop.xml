@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com/DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="affiliateShop">
+
+	<typeAlias alias="affiliateShop" type="com.sx.ally.service.model.AffiliateShop"/>
+	
+	<resultMap id="affiliateShopResultMap" class="affiliateShop">
+	    <result property="affiliateShopNo" column="shop_no"/>
+	    <result property="affiliateShopName" column="shop_nm"/>
+	    <result property="representative" column="repr_nm"/>
+	    <result property="shopCategoryCode" column="shop_cat_cd"/>
+	    <result property="telephoneNo" column="tel_no"/>
+	    <result property="cellphoneNo" column="cph_no"/>
+	    <result property="loginID" column="login_id"/>
+	    <result property="loginPassword" column="login_pwd"/>
+	    <result property="productCount" column="prod_cnt"/>
+	    <result property="lastLoginYmdt" column="lst_login_ymdt"/>
+	    <result property="affiliateShopStatusCode" column="shop_stat_cd"/>
+	    <result property="joinAdmissionYmdt" column="join_adms_ymdt"/>	    
+	</resultMap>
+	
+	<select id="selectAffiliateShop" resultMap="affiliateShopResultMap">
+		/* selectAffiliateShop */
+		SELECT
+			shop_no,
+			shop_nm,
+			repr_nm,
+			shop_cat_cd,
+			tel_no,
+			cph_no,
+			login_id,
+			login_pwd,
+			prod_cnt,
+			lst_login_ymdt,
+			shop_stat_cd,
+			join_adms_ymdt
+		FROM
+			ally_afflat_shop
+		WHERE
+	    	shop_no = #affiliateShopNo#
+	</select>
+	
+	<select id="selectAffiliateShopList" resultMap="affiliateShopResultMap">
+		/* selectAffiliateShopList */
+		SELECT
+			shop_no,
+			shop_nm,
+			repr_nm,
+			shop_cat_cd,
+			tel_no,
+			cph_no,
+			login_id,
+			login_pwd,
+			prod_cnt,
+			lst_login_ymdt,
+			shop_stat_cd,
+			join_adms_ymdt
+		FROM
+			ally_afflat_shop
+		WHERE
+			1=1
+			<isNotEmpty prepend="AND"  property="affiliateShopNo">
+	    		shop_no = #affiliateShopNo#
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="AND"  property="affiliateShopName">
+	    		shop_nm = #affiliateShopName#
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="AND"  property="representative">
+	    		repr_nm = #representative#
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="AND"  property="shopCategoryCode">
+	    		shop_cat_cd = #shopCategoryCode#
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="AND"  property="telephoneNo">
+	    		tel_no = #telephoneNo#
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="AND"  property="cellphoneNo">
+	    		cph_no = #cellphoneNo#
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="AND"  property="loginID">
+	    		login_id = #loginID#
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="AND"  property="loginPassword">
+	    		login_pwd = #loginPassword#
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="AND"  property="productCount">
+	    		prod_cnt = #productCount#
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="AND"  property="lastLoginYmdt">
+	    		TO_CHAR(lst_login_ymdt,'YYYY-MM-DD') = #lastLoginYmdt#
+	    	</isNotEmpty>
+	    	<isNotEmpty prepend="AND"  property="affiliateShopStatusCode">
+	    		shop_stat_cd = #affiliateShopStatusCode#
+	    	</isNotEmpty>
+	</select>
+	
+	<insert id="insertAffiliateShop" parameterClass="hashmap">
+		/* insertAffiliateShop */
+		INSERT INTO
+			ally_afflat_shop (
+				shop_nm,
+				repr_nm,
+				shop_cat_cd,
+				tel_no,
+				cph_no,
+				login_id,
+				login_pwd,
+				prod_cnt,
+				lst_login_ymdt,
+				shop_stat_cd,
+				join_adms_ymdt
+			)
+		VALUES
+			(
+				#affiliateShopName#,
+				#representative#,
+				#shopCategoryCode#,
+				#telephoneNo#,
+				#cellphoneNo#,
+				#loginID#,
+				#loginPassword#,
+				0,
+				NULL,
+				'WAIT',
+				NULL
+			)
+	</insert>
+	
+	<update id="updateShopStatusCode" parameterClass="hashmap">
+		/* updateShopStatusCode */
+		UPDATE
+			ally_afflat_shop
+		SET
+			shop_stat_cd = #affiliateShopStatusCode#
+		WHERE
+			shop_no = #affiliateShopNo#
+	</update>
+	
+	<update id="updateShopProductCount" parameterClass="hashmap">
+		/* updateShopProductCount */
+		UPDATE
+			ally_afflat_shop
+		SET
+			prod_cnt = #productCount#
+		WHERE
+			shop_no = #affiliateShopNo#
+	</update>
+</sqlMap>

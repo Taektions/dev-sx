@@ -2,6 +2,7 @@ package com.sx.ally.common.util;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
@@ -9,6 +10,7 @@ import sun.misc.BASE64Encoder;
 /**
  * @author YunTaek Lee
  */
+@SuppressWarnings("restriction")
 public class Base64Utils {
 
 	/**
@@ -28,7 +30,7 @@ public class Base64Utils {
 
 		try {
 			base64Encoder.encodeBuffer(bin, bout);
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out.println("Exception");
 			e.printStackTrace();
 		}
@@ -53,7 +55,7 @@ public class Base64Utils {
 
 		try {
 			base64Decoder.decodeBuffer(bin, bout);
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out.println("Exception");
 			e.printStackTrace();
 		}

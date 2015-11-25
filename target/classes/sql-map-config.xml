@@ -21,4 +21,6 @@
 
 	<!-- sqlMap.xml 을 추가한다. -->
 	<sqlMap resource="sqlmap/member.xml" />
+	<sqlMap resource="sqlmap/product.xml" />
+	<sqlMap resource="sqlmap/affiliateShop.xml" />
  </sqlMapConfig>
