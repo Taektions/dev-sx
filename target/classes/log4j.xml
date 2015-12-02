@@ -9,9 +9,8 @@
 			<param name="ConversionPattern" value="%-5p: %c - %m%n" />
 		</layout>
 	</appender>
-	
-	<appender name="dailyout" class="org.apache.log4j.DailyRollingFileAppender">  
-        <!-- 이것은 날짜별로  로그를 남김. 파일명.확장자.DatePattern으로 정의 함-->  
+	 <!-- 이것은 날짜별로  로그를 남김. 파일명.확장자.DatePattern으로 정의 함
+	<appender name="dailyout" class="org.apache.log4j.DailyRollingFileAppender">   
         <param name="file" value="ally_dailyout.log"/>  
         <param name="Append" value="true"/>  
         <param name="DatePattern" value="'.'yyMMdd"/>  
@@ -19,7 +18,8 @@
             <param name="ConversionPattern" value="%t> [%d{yyyy-MM-dd HH:mm:ss}] [%c{1}] [%L] [%p] %m %n"/>  
         </layout>  
     </appender>
-
+	 -->
+	 
 	<logger name="com.sx.ally" additivity="false">
 		<level value="DEBUG" />
 		<appender-ref ref="console" />
