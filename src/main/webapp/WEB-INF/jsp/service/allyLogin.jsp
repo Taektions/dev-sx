@@ -24,7 +24,7 @@ $(document).ready(function() {
 		var companyNo = $("#selCompany option:selected").val();
 		
 		alert(emailAddress + "로 인증번호가 발송되었습니다.");
-		$.post("http://10.67.8.103:8080/ally/member/applyCertificationCode",
+		$.post("/ally/member/applyCertificationCode",
 				{
 					emailAddress : emailAddress,
 					ageGroup : ageGroup,
