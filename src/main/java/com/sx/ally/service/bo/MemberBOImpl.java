@@ -85,7 +85,6 @@ public class MemberBOImpl implements MemberBO{
 	@Override
 	public Map<String, Object> certificationMember(Map<String, Object> paramMap) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		result.put(AllyParamConstants.PARAM_RESULT_IS_SUCCESS, false);
 		
 		MemberEmailCertificationInfo certificationInfo = memberDAO.selectMemberEmailCertificationInfo(paramMap);
 		if (certificationInfo == null) {
@@ -107,7 +106,9 @@ public class MemberBOImpl implements MemberBO{
 			
 			result.put("loginKey", (String) paramMap.get(AllyParamConstants.PARAM_MEMBER_CERTIFICATION_CODE));
 			result.put(AllyParamConstants.PARAM_RESULT_IS_SUCCESS, true);
+			result.put(AllyParamConstants.PARAM_RESULT_MESSAGE, "이메일 인증이 완료되었습니다.");
 		} else {
+			result.put(AllyParamConstants.PARAM_RESULT_IS_SUCCESS, false);
 			result.put(AllyParamConstants.PARAM_RESULT_MESSAGE, "인증번호 유효시간을 초과하였습니다. 인증번호를 다시 발급받아 주세요.");
 		}
 		
