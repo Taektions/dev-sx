@@ -57,7 +57,7 @@ public class EmailSendBOImpl implements EmailSendBO {
 		String subject = "회원가입 인증메일 입니다.";
 		String message = "<p><span style='color: rgb(99, 99, 99);'>안녕하세요.</span></p><p><br></p>"
 				+ "<p><span style='color: rgb(99, 99, 99);'>고객님의 가입인증을 위한 인증코드 입니다.</span></p>"
-				+ "<a href='http://10.67.8.103:8080/ally/member/certificationMember?certificationCode=" + crtCode + "&emailAddress=" + recipientAddress + "&ageGroup=" + ageGroup + "&sex=" + sex + "&companyNo=" + companyNo +"' target='_self' style='cursor: pointer; white-space: pre;'>[이메일 인증]</a>"
+				+ "<a href='http://10.113.216.132/ally/member/certificationMember?certificationCode=" + crtCode + "&emailAddress=" + recipientAddress + "&ageGroup=" + ageGroup + "&sex=" + sex + "&companyNo=" + companyNo +"' target='_self' style='cursor: pointer; white-space: pre;'>[이메일 인증]</a>"
 				+ "<p><b><span style='font-size: 14pt; color: rgb(0, 117, 200);'>[" + crtCode + "]</span></b></p>"
 				+ "<p><br></p><p><span style='color: rgb(99, 99, 99);'>ALLY TEAM.</span></p>";
 		
