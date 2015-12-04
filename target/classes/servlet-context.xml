@@ -31,8 +31,8 @@
 	</mvc:interceptors>
 	
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-        <property name="host" value="smtp.gmail.com" />
-        <property name="port" value="587" />
+        <property name="host" value="127.0.0.1" />
+        <property name="port" value="25" />
         <property name="username" value="ocm.customer.service@gmail.com" />
         <property name="password" value="ocm!@#123" />
         <property name="javaMailProperties">
