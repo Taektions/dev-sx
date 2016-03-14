@@ -90,7 +90,7 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value = "/certificationMember")
-	public View certificationMember(Model model, HttpServletRequest request,
+	public String certificationMember(Model model, HttpServletRequest request,
 			@RequestParam(value="certificationCode", required=true) String certificationCode,
 			@RequestParam(value="emailAddress", required=true) String emailAddress,
 			@RequestParam(value="ageGroup", required=true) int ageGroup,
@@ -107,6 +107,6 @@ public class MemberController {
 		Map<String, Object> resultMap = memberBO.certificationMember(paramMap);
 		
 		model.addAllAttributes(resultMap);
-		return jsonView;
+		return "service/certificationMember";
 	}
 }
