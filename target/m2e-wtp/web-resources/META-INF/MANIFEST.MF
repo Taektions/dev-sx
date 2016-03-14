@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Built-By: NAVER
-Build-Jdk: 1.8.0_40
+Build-Jdk: 1.6.0_45
+Built-By: YunTaek Lee
 Created-By: Maven Integration for Eclipse
 
