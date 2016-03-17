@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+	
+	<resultMap id="memberResultMap" type="member">
+	    <result property="memberNo" column="mbr_no"/>
+	    <result property="loginID" column="login_id"/>
+	    <result property="sex" column="sex"/>
+	    <result property="ageGroup" column="age_grp"/>
+	    <result property="companyNo" column="co_no"/>
+	    <result property="companyName" column="co_nm"/>
+	</resultMap>
+	<resultMap id="memberEmailCrtInfoResultMap" type="memberEmailCertificationInfo">
+		<result property="emailAddress" column="email_addr"/>
+		<result property="certificationCode" column="crt_cd"/>
+		<result property="certificationCodeIssuedYmdt" column="crt_cd_isue_ymdt"/>
+	</resultMap>
+	
+	<select id="selectMember" resultMap="memberResultMap">
+		/* selectMember */
+		SELECT
+			mbr.mbr_no,
+			mbr.login_id,
+			mbr.sex,
+			mbr.age_grp,
+			co.co_no,
+			co.co_nm
+		FROM
+			ally_mbr mbr,
+			ally_co co
+		WHERE
+			mbr.co_no = co.co_no
+			<if test="memberNo != '' and memberNo != null">
+	    		AND mbr.mbr_no = #{memberNo}
+	    	</if>
+	    	<if test="loginID != '' and loginID != null">
+	    		AND mbr.login_id = #{loginID}
+	    	</if>
+	    	<if test="sex != '' and sex != null">
+	    		AND mbr.sex = #{sex}
+	    	</if>
+	    	<if test="ageGroup != '' and ageGroup != null">
+	    		AND mbr.age_grp = #{ageGroup}
+	    	</if>
+	    	<if test="companyNo != '' and companyNo != null">
+	    		AND mbr.co_no = #{companyNo}
+	    	</if>
+	</select>
+	
+	<select id="selectMemberCount" resultType="int">
+		/* selectMemberCount */
+		SELECT
+			COUNT(*)
+		FROM
+			ally_mbr
+		WHERE
+			1=1
+			<if test="memberNo != '' and memberNo != null">
+	    		AND mbr_no = #{memberNo}
+	    	</if>
+	    	<if test="loginID != '' and loginID != null">
+	    		AND login_id = #{loginID}
+	    	</if>
+	    	<if test="sex != '' and sex != null">
+	    		AND sex = #{sex}
+	    	</if>
+	    	<if test="ageGroup != '' and ageGroup != null">
+	    		AND age_grp = #{ageGroup}
+	    	</if>
+	    	<if test="companyNo != '' and companyNo != null">
+	    		AND co_no = #{companyNo}
+	    	</if>
+	</select>
+	
+	<insert id="insertMember" parameterType="hashmap">
+		/* insertMember */
+		INSERT INTO
+			ally_mbr
+			(
+				login_id,
+				sex,
+				age_grp,
+				co_no
+			)
+		VALUES
+			(
+				#{loginID},
+				#{sex},
+				#{ageGroup},
+				#{companyNo}
+			)
+	</insert>
+	
+	<select id="selectMemberEmailCertificationInfo" parameterType="hashmap" resultMap="memberEmailCrtInfoResultMap">
+    	/* selectMemberEmailCertificationInfo */
+    	SELECT
+			email_addr,
+			crt_cd,
+			crt_cd_isue_ymdt
+		FROM
+			ally_mbr_email_crt
+		WHERE
+			1=1
+			<if test="loginID != '' and loginID != null">
+	    		AND email_addr = #{loginID}
+	    	</if>
+	    	<if test="certificationCode != '' and certificationCode != null">
+	    		AND crt_cd = #{certificationCode}
+	    	</if>
+	</select>
+	
+	<select id="selectMemberEmailCertificationInfoCount" parameterType="hashmap" resultType="int">
+    	/* selectMemberEmailCertificationInfoCount */
+    	SELECT
+			COUNT(*)
+		FROM
+			ally_mbr_email_crt
+		WHERE
+			1=1
+			<if test="loginID != '' and loginID != null">
+	    		AND email_addr = #{loginID}
+	    	</if>
+	    	<if test="certificationCode != '' and certificationCode != null">
+	    		AND crt_cd = #{certificationCode}
+	    	</if>
+	</select>	
+	
+	<insert id="insertMemberEmailCertificationInfo" parameterType="hashmap">
+    	/* insertMemberEmailCertificationInfo */
+    	INSERT INTO 
+    		ally_mbr_email_crt
+    		(
+    			email_addr,
+				crt_cd,
+				crt_cd_isue_ymdt
+			) 
+    	VALUES 
+    		(
+    			#{loginID},
+    			#{certificationCode},
+				SYSDATETIME
+			)
+	</insert>
+	
+	<update id="updateMemberEmailCertificationInfo" parameterType="hashmap">
+    	/* updateMemberEmailCertificationInfo */
+    	UPDATE
+			ally_mbr_email_crt
+		SET
+			email_addr = #{loginID},
+			crt_cd = #{certificationCode},
+			crt_cd_isue_ymdt = SYSDATETIME
+		WHERE
+			email_addr = #{loginID}
+	</update>
+	
+</mapper>

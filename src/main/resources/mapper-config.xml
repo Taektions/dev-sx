@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias alias="affiliateShop" type="com.sx.ally.service.model.AffiliateShop"/>
+		<typeAlias alias="member" type="com.sx.ally.service.model.Member"/>
+		<typeAlias alias="memberEmailCertificationInfo" type="com.sx.ally.service.model.MemberEmailCertificationInfo"/>
+		<typeAlias alias="product" type="com.sx.ally.service.model.Product"/>
+	</typeAliases>
+	
+	<mappers>
+		<mapper resource="mapper/member.xml" />
+		<mapper resource="mapper/product.xml" />
+		<mapper resource="mapper/affiliateShop.xml" />
+	</mappers>
+</configuration>

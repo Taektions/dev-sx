@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="product">
+	
+	<resultMap id="productResultMap" type="product">
+	    <result property="productNo" column="prod_no"/>
+	    <result property="productName" column="prod_nm"/>
+	    <result property="categoryCode" column="prod_cat_cd"/>
+	    <result property="producDescription" column="prod_desc"/>
+	    <result property="affiliateStartYmdt" column="afflat_strt_ymdt"/>
+	    <result property="affiliateEndYmdt" column="afflat_end_ymdt"/>
+	    <result property="productDiscountPercent" column="prod_dc_pct"/>
+	    <result property="affiliateShopNo" column="shop_no"/>
+	</resultMap>
+	
+	<select id="selectProductList" resultMap="productResultMap">
+		/* selectProductList */
+		SELECT
+			prod_no,
+			prod_nm,
+			prod_cat_cd,
+			prod_desc,
+			afflat_strt_ymdt,
+			afflat_end_ymdt,
+			prod_dc_pct,
+			shop_no
+		FROM
+			ally_prod
+		WHERE
+			1=1
+			<if test="productNo != '' and productNo != null">
+	    		AND prod_no = #{productNo}
+	    	</if>
+	    	<if test="productName != '' and productName != null">
+	    		AND prod_nm = #{productName}
+	    	</if>
+	    	<if test="categoryCode != '' and categoryCode != null">
+	    		AND prod_cat_cd = #{categoryCode}
+	    	</if>
+	    	<if test="producDescription != '' and producDescription != null">
+	    		AND prod_desc = #{producDescription}
+	    	</if>
+	    	<if test="affiliateStartYmdt != '' and affiliateStartYmdt != null">
+	    		AND TO_CHAR(afflat_strt_ymdt,'YYYY-MM-DD') = #{affiliateStartYmdt}
+	    	</if>
+	    	<if test="affiliateEndYmdt != '' and affiliateEndYmdt != null">
+	    		AND TO_CHAR(afflat_end_ymdt,'YYYY-MM-DD') = #{affiliateEndYmdt}
+	    	</if>
+	    	<if test="productDiscountPercent != '' and productDiscountPercent != null">
+	    		AND prod_dc_pct = #{productDiscountPercent}
+	    	</if>
+	    	<if test="affiliateShopNo != '' and affiliateShopNo != null">
+	    		AND shop_no = #{affiliateShopNo}
+	    	</if>
+	</select>
+	
+	<insert id="insertProduct" parameterType="hashmap">
+	/* insertProduct */
+	INSERT INTO
+		ally_prod (
+			prod_nm,
+			prod_cat_cd,
+			prod_desc,
+			afflat_strt_ymdt,
+			afflat_end_ymdt,
+			prod_dc_pct,
+			shop_no
+		)
+		VALUES
+		(
+			#{productName},
+			#{categoryCode},
+			#{producDescription},
+			SYSDATETIME, /* affiliateStartYmdt */
+			SYSDATETIME, /* affiliateEndYmdt */
+			#{productDiscountPercent},
+			#{affiliateShopNo}
+		);
+	</insert>
+</mapper>

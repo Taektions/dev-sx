@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="affiliateShop">
+	
+	<resultMap id="affiliateShopResultMap" type="affiliateShop">
+	    <result property="affiliateShopNo" column="shop_no"/>
+	    <result property="affiliateShopName" column="shop_nm"/>
+	    <result property="representative" column="repr_nm"/>
+	    <result property="shopCategoryCode" column="shop_cat_cd"/>
+	    <result property="telephoneNo" column="tel_no"/>
+	    <result property="cellphoneNo" column="cph_no"/>
+	    <result property="loginID" column="login_id"/>
+	    <result property="loginPassword" column="login_pwd"/>
+	    <result property="productCount" column="prod_cnt"/>
+	    <result property="lastLoginYmdt" column="lst_login_ymdt"/>
+	    <result property="affiliateShopStatusCode" column="shop_stat_cd"/>
+	    <result property="joinAdmissionYmdt" column="join_adms_ymdt"/>	    
+	</resultMap>
+	
+	<select id="selectAffiliateShop" resultMap="affiliateShopResultMap">
+		/* selectAffiliateShop */
+		SELECT
+			shop_no,
+			shop_nm,
+			repr_nm,
+			shop_cat_cd,
+			tel_no,
+			cph_no,
+			login_id,
+			login_pwd,
+			prod_cnt,
+			lst_login_ymdt,
+			shop_stat_cd,
+			join_adms_ymdt
+		FROM
+			ally_afflat_shop
+		WHERE
+	    	shop_no = #{affiliateShopNo}
+	</select>
+	
+	<select id="selectAffiliateShopList" resultMap="affiliateShopResultMap">
+		/* selectAffiliateShopList */
+		SELECT
+			shop_no,
+			shop_nm,
+			repr_nm,
+			shop_cat_cd,
+			tel_no,
+			cph_no,
+			login_id,
+			login_pwd,
+			prod_cnt,
+			lst_login_ymdt,
+			shop_stat_cd,
+			join_adms_ymdt
+		FROM
+			ally_afflat_shop
+		WHERE
+			1=1
+			<if test="affiliateShopNo != '' and affiliateShopNo != null">
+	    		AND shop_no = #{affiliateShopNo}
+	    	</if>
+	    	<if test="affiliateShopName != '' and affiliateShopName != null">
+	    		AND shop_nm = #{affiliateShopName}
+	    	</if>
+	    	<if test="representative != '' and representative != null">
+	    		AND repr_nm = #{representative}
+	    	</if>
+	    	<if test="shopCategoryCode != '' and shopCategoryCode != null">
+	    		AND shop_cat_cd = #{shopCategoryCode}
+	    	</if>
+	    	<if test="telephoneNo != '' and telephoneNo != null">
+	    		AND tel_no = #{telephoneNo}
+	    	</if>
+	    	<if test="cellphoneNo != '' and cellphoneNo != null">
+	    		AND cph_no = #{cellphoneNo}
+	    	</if>
+	    	<if test="loginID != '' and loginID != null">
+	    		AND login_id = #{loginID}
+	    	</if>
+	    	<if test="loginPassword != '' and loginPassword != null">
+	    		AND login_pwd = #{loginPassword}
+	    	</if>
+	    	<if test="productCount != '' and productCount != null">
+	    		AND prod_cnt = #{productCount}
+	    	</if>
+	    	<if test="lastLoginYmdt != '' and lastLoginYmdt != null">
+	    		AND TO_CHAR(lst_login_ymdt,'YYYY-MM-DD') = #{lastLoginYmdt}
+	    	</if>
+	    	<if test="affiliateShopStatusCode != '' and affiliateShopStatusCode != null">
+	    		AND shop_stat_cd = #{affiliateShopStatusCode}
+	    	</if>
+	</select>
+	
+	<insert id="insertAffiliateShop" parameterType="hashmap">
+		/* insertAffiliateShop */
+		INSERT INTO
+			ally_afflat_shop (
+				shop_nm,
+				repr_nm,
+				shop_cat_cd,
+				tel_no,
+				cph_no,
+				login_id,
+				login_pwd,
+				prod_cnt,
+				lst_login_ymdt,
+				shop_stat_cd,
+				join_adms_ymdt
+			)
+		VALUES
+			(
+				#{affiliateShopName},
+				#{representative},
+				#{shopCategoryCode},
+				#{telephoneNo},
+				#{cellphoneNo},
+				#{loginID},
+				#{loginPassword},
+				0,
+				NULL,
+				'WAIT',
+				NULL
+			)
+	</insert>
+	
+	<update id="updateShopStatusCode" parameterType="hashmap">
+		/* updateShopStatusCode */
+		UPDATE
+			ally_afflat_shop
+		SET
+			shop_stat_cd = #{affiliateShopStatusCode}
+		WHERE
+			shop_no = #{affiliateShopNo}
+	</update>
+	
+	<update id="updateShopProductCount" parameterType="hashmap">
+		/* updateShopProductCount */
+		UPDATE
+			ally_afflat_shop
+		SET
+			prod_cnt = #{productCount}
+		WHERE
+			shop_no = #{affiliateShopNo}
+	</update>
+</mapper>

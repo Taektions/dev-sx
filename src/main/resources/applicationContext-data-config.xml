@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	   http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+	   http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+	   ">
+	<bean id="propertyConfigurer"
+		  class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:properties/jdbc.properties</value>
+			</list>
+		</property>
+	</bean>
+
+<!-- 	DataSource Configuration -->
+	<bean id="allyDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driverClassName}"/>
+		<property name="url" value="${jdbc.url}"/>
+		<property name="username" value="${jdbc.username}"/>
+		<property name="password" value="${jdbc.password}"/>
+		<property name="initialSize" value="5"/>
+		<property name="maxActive" value="20"/>
+		<property name="minIdle" value="5"/>
+		<property name="maxWait" value="3000"/>
+		<property name="poolPreparedStatements" value="true"></property>
+		<property name="maxOpenPreparedStatements" value="50"></property>
+	</bean>
+
+<!-- 	Transaction manager for a single JDBC DataSource -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="allyDataSource" />
+<!-- 		<property name="mapperLocations" value="classpath:/mapper/**/*.xml" /> -->
+		<property name="configLocation" value="classpath:mapper-config.xml" />
+	</bean>
+
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory"/>
+    </bean>  
+
+	<bean id="allyTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="allyDataSource"/>
+	</bean>	
+
+	<!-- Annotation 을 사용한 트랜잭션 사용시 활성화 -->
+	<tx:annotation-driven transaction-manager="allyTransactionManager"></tx:annotation-driven>
+</beans>

@@ -17,7 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.View;
-import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import com.sx.ally.common.AllyParamConstants;
 import com.sx.ally.service.bo.AffiliateShopBO;
@@ -43,7 +43,7 @@ public class MemberController {
 	private AffiliateShopBO affiliateShopBO;
 	
 	@Autowired
-	private MappingJacksonJsonView jsonView;
+	private MappingJackson2JsonView jsonView;
 
 	@RequestMapping(value = "/login")
 	public String home(Locale locale, Model model) {

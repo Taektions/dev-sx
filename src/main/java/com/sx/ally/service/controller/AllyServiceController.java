@@ -12,7 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.View;
-import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import com.sx.ally.service.bo.ProductBO;
 import com.sx.ally.service.model.Product;
@@ -26,7 +26,7 @@ public class AllyServiceController {
 	private ProductBO productBO;
 	
 	@Autowired
-	private MappingJacksonJsonView jsonView;
+	private MappingJackson2JsonView jsonView;
 
 	@RequestMapping(value = "/product/list")
 	public View home(Locale locale, Model model) {
