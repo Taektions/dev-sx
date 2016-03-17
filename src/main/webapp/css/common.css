@@ -32,3 +32,5 @@ a.btn_xsml strong {display:block; padding:1px 6px 0 7px; background:url(http://s
 
 .down {color:white; background:red}
 .up {color:white; background:green}
+
+.table tbody tr td {background:white}

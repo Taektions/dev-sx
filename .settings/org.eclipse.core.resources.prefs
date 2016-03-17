@@ -1,0 +1,4 @@
+eclipse.preferences.version=1
+encoding//src/main/resources/properties/common.properties=UTF-8
+encoding//src/main/resources/properties/jdbc.properties=UTF-8
+encoding//src/main/webapp/WEB-INF/jsp/admin/layer/adminHeader.jsp=UTF-8

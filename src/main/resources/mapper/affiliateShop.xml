@@ -10,7 +10,6 @@
 	    <result property="telephoneNo" column="tel_no"/>
 	    <result property="cellphoneNo" column="cph_no"/>
 	    <result property="loginID" column="login_id"/>
-	    <result property="loginPassword" column="login_pwd"/>
 	    <result property="productCount" column="prod_cnt"/>
 	    <result property="lastLoginYmdt" column="lst_login_ymdt"/>
 	    <result property="affiliateShopStatusCode" column="shop_stat_cd"/>
@@ -27,7 +26,6 @@
 			tel_no,
 			cph_no,
 			login_id,
-			login_pwd,
 			prod_cnt,
 			lst_login_ymdt,
 			shop_stat_cd,
@@ -48,7 +46,6 @@
 			tel_no,
 			cph_no,
 			login_id,
-			login_pwd,
 			prod_cnt,
 			lst_login_ymdt,
 			shop_stat_cd,
@@ -61,7 +58,7 @@
 	    		AND shop_no = #{affiliateShopNo}
 	    	</if>
 	    	<if test="affiliateShopName != '' and affiliateShopName != null">
-	    		AND shop_nm = #{affiliateShopName}
+	    		AND shop_nm LIKE '%' || #{affiliateShopName} || '%'
 	    	</if>
 	    	<if test="representative != '' and representative != null">
 	    		AND repr_nm = #{representative}
@@ -76,10 +73,7 @@
 	    		AND cph_no = #{cellphoneNo}
 	    	</if>
 	    	<if test="loginID != '' and loginID != null">
-	    		AND login_id = #{loginID}
-	    	</if>
-	    	<if test="loginPassword != '' and loginPassword != null">
-	    		AND login_pwd = #{loginPassword}
+	    		AND login_id LIKE '%' || #{loginID} || '%'
 	    	</if>
 	    	<if test="productCount != '' and productCount != null">
 	    		AND prod_cnt = #{productCount}

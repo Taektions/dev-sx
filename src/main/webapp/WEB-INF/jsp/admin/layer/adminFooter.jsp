@@ -1,0 +1,2 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<p class="text-muted  text-center">Copyright © <a href="/ally/admin/main" target="_blank" style="color:#4A8ED8"><b>Ally Corp.</b></a> All Rights Reserved.</p>
