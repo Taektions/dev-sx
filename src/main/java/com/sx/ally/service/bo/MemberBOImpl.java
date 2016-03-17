@@ -15,6 +15,7 @@ import com.sx.ally.common.AllyParamConstants;
 import com.sx.ally.common.bo.EmailSendBO;
 import com.sx.ally.common.util.EmailCertificationUtil;
 import com.sx.ally.service.dao.MemberDAO;
+import com.sx.ally.service.model.Company;
 import com.sx.ally.service.model.Member;
 import com.sx.ally.service.model.MemberEmailCertificationInfo;
 
@@ -113,5 +114,10 @@ public class MemberBOImpl implements MemberBO{
 		}
 		
 		return result;
+	}
+
+	@Override
+	public List<Company> getCompanyList(Map<String, Object> paramMap) {
+		return memberDAO.selectCompanyList(paramMap);
 	}
 }

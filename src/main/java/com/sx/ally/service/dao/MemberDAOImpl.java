@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.sx.ally.common.AllyParamConstants;
+import com.sx.ally.service.model.Company;
 import com.sx.ally.service.model.Member;
 import com.sx.ally.service.model.MemberEmailCertificationInfo;
 
@@ -72,5 +73,10 @@ public class MemberDAOImpl implements MemberDAO{
 	@Override
 	public int updateMemberEmailCertificationInfo(Map<String, Object> paramMap) {
 		return allySqlMapClientTemplate.update(NAMESPACE + "updateMemberEmailCertificationInfo", paramMap);
+	}
+
+	@Override
+	public List<Company> selectCompanyList(Map<String, Object> paramMap) {
+		return allySqlMapClientTemplate.selectList(NAMESPACE + "selectCompanyList", paramMap);
 	}	
 }

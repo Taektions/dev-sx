@@ -157,4 +157,12 @@
 			email_addr = #loginID#
 	</update>
 	
+	<select id="selectCompanyList" parameterClass="hashmap" resultMap="companyResultMap">
+		/* selectCompanyList */
+		SELECT 
+			co_no, 
+			co_nm 
+		FROM 
+			ally_co 
+	</select>
 </sqlMap>

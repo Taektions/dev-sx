@@ -17,10 +17,10 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 import com.sx.ally.service.bo.ProductBO;
 import com.sx.ally.service.model.Product;
 
-@RequestMapping(value = "/service")
+@RequestMapping(value = "/product")
 @Controller
-public class AllyServiceController {
-	private static final Logger logger = LoggerFactory.getLogger(AllyServiceController.class);
+public class ProductController {
+	private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
 	
 	@Autowired
 	private ProductBO productBO;
@@ -28,7 +28,7 @@ public class AllyServiceController {
 	@Autowired
 	private MappingJackson2JsonView jsonView;
 
-	@RequestMapping(value = "/product/list")
+	@RequestMapping(value = "/list")
 	public View home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		

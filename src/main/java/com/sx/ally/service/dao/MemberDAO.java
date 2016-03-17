@@ -3,6 +3,7 @@ package com.sx.ally.service.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.sx.ally.service.model.Company;
 import com.sx.ally.service.model.Member;
 import com.sx.ally.service.model.MemberEmailCertificationInfo;
 
@@ -25,5 +26,7 @@ public interface MemberDAO {
 	public int insertMemberEmailCertificationInfo(Map<String, Object> paramMap);
 	
 	public int updateMemberEmailCertificationInfo(Map<String, Object> paramMap);
+
+	public List<Company> selectCompanyList(Map<String, Object> paramMap);
 	
 }

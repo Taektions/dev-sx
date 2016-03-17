@@ -3,7 +3,6 @@ package com.sx.ally.service.controller;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -23,9 +22,6 @@ import com.sx.ally.common.AllyParamConstants;
 import com.sx.ally.service.bo.AffiliateShopBO;
 import com.sx.ally.service.bo.MemberBO;
 import com.sx.ally.service.bo.ProductBO;
-import com.sx.ally.service.model.AffiliateShop;
-import com.sx.ally.service.model.Member;
-import com.sx.ally.service.model.Product;
 
 @RequestMapping(value = "/member")
 @Controller
@@ -46,20 +42,10 @@ public class MemberController {
 	private MappingJackson2JsonView jsonView;
 
 	@RequestMapping(value = "/login")
-	public String home(Locale locale, Model model) {
+	public View home(Locale locale, Model model) {
 		logger.info("Login Page : The client locale is {}.", locale);
-
-		Map<String, Object> paramMap = new HashMap<String, Object>();
-		List<Member> memberList = memberBO.getMemberList(paramMap);
 		
-		List<AffiliateShop> shopList = affiliateShopBO.getAffiliateShopList(paramMap);
-		List<Product> productList = productBO.getProductList(paramMap);
-		
-		
-		model.addAttribute("memberList", memberList);
-		model.addAttribute("shopList", shopList);
-		model.addAttribute("productList", productList);
-		return "service/allyLogin";
+		return jsonView;
 	}
 	
 	@RequestMapping(value = "/applyCertificationCode")
