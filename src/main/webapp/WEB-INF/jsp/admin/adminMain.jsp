@@ -25,7 +25,11 @@ $(document).ready(function() {
 		var companyNo = $("#selCompany option:selected").val();
 		
 		alert(emailAddress + "로 인증번호가 발송되었습니다. ");
+<<<<<<< HEAD
 		$.post("/ally/member/applyCertificationCode",
+=======
+		$.post("http://<spring:message code="server.ip" />/ally/member/applyCertificationCode",
+>>>>>>> refs/remotes/origin/master
 				{
 					emailAddress : emailAddress,
 					ageGroup : ageGroup,
