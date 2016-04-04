@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com/DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
-<sqlMap namespace="member">
-
-	<typeAlias alias="member" type="com.sx.ally.service.model.Member"/>
-	<typeAlias alias="memberEmailCertificationInfo" type="com.sx.ally.service.model.MemberEmailCertificationInfo"/>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
 	
-	<resultMap id="memberResultMap" class="member">
+	<resultMap id="memberResultMap" type="member">
 	    <result property="memberNo" column="mbr_no"/>
 	    <result property="loginID" column="login_id"/>
 	    <result property="sex" column="sex"/>
@@ -13,10 +10,15 @@
 	    <result property="companyNo" column="co_no"/>
 	    <result property="companyName" column="co_nm"/>
 	</resultMap>
-	<resultMap id="memberEmailCrtInfoResultMap" class="memberEmailCertificationInfo">
+	<resultMap id="memberEmailCrtInfoResultMap" type="memberEmailCertificationInfo">
 		<result property="emailAddress" column="email_addr"/>
 		<result property="certificationCode" column="crt_cd"/>
 		<result property="certificationCodeIssuedYmdt" column="crt_cd_isue_ymdt"/>
+	</resultMap>
+	<resultMap id="companyResultMap" type="company">
+		<result property="companyNo" column="co_no"/>
+		<result property="companyName" column="co_nm"/>
+		<result property="domainCount" column="dmn_cnt"/>
 	</resultMap>
 	
 	<select id="selectMember" resultMap="memberResultMap">
@@ -33,24 +35,24 @@
 			ally_co co
 		WHERE
 			mbr.co_no = co.co_no
-			<isNotEmpty prepend="AND"  property="memberNo">
-	    		mbr.mbr_no = #memberNo#
-	    	</isNotEmpty>
-	    	<isNotEmpty prepend="AND"  property="loginID">
-	    		mbr.login_id = #loginID#
-	    	</isNotEmpty>
-	    	<isNotEmpty prepend="AND"  property="sex">
-	    		mbr.sex = #sex#
-	    	</isNotEmpty>
-	    	<isNotEmpty prepend="AND"  property="ageGroup">
-	    		mbr.age_grp = #ageGroup#
-	    	</isNotEmpty>
-	    	<isNotEmpty prepend="AND"  property="companyNo">
-	    		mbr.co_no = #companyNo#
-	    	</isNotEmpty>
+			<if test="memberNo != '' and memberNo != null">
+	    		AND mbr.mbr_no = #{memberNo}
+	    	</if>
+	    	<if test="loginID != '' and loginID != null">
+	    		AND mbr.login_id = #{loginID}
+	    	</if>
+	    	<if test="sex != '' and sex != null">
+	    		AND mbr.sex = #{sex}
+	    	</if>
+	    	<if test="ageGroup != '' and ageGroup != null">
+	    		AND mbr.age_grp = #{ageGroup}
+	    	</if>
+	    	<if test="companyNo != '' and companyNo != null">
+	    		AND mbr.co_no = #{companyNo}
+	    	</if>
 	</select>
 	
-	<select id="selectMemberCount" resultClass="int">
+	<select id="selectMemberCount" resultType="int">
 		/* selectMemberCount */
 		SELECT
 			COUNT(*)
@@ -58,24 +60,24 @@
 			ally_mbr
 		WHERE
 			1=1
-			<isNotEmpty prepend="AND"  property="memberNo">
-	    		mbr_no = #memberNo#
-	    	</isNotEmpty>
-	    	<isNotEmpty prepend="AND"  property="loginID">
-	    		login_id = #loginID#
-	    	</isNotEmpty>
-	    	<isNotEmpty prepend="AND"  property="sex">
-	    		sex = #sex#
-	    	</isNotEmpty>
-	    	<isNotEmpty prepend="AND"  property="ageGroup">
-	    		age_grp = #ageGroup#
-	    	</isNotEmpty>
-	    	<isNotEmpty prepend="AND"  property="companyNo">
-	    		co_no = #companyNo#
-	    	</isNotEmpty>
+			<if test="memberNo != '' and memberNo != null">
+	    		AND mbr_no = #{memberNo}
+	    	</if>
+	    	<if test="loginID != '' and loginID != null">
+	    		AND login_id = #{loginID}
+	    	</if>
+	    	<if test="sex != '' and sex != null">
+	    		AND sex = #{sex}
+	    	</if>
+	    	<if test="ageGroup != '' and ageGroup != null">
+	    		AND age_grp = #{ageGroup}
+	    	</if>
+	    	<if test="companyNo != '' and companyNo != null">
+	    		AND co_no = #{companyNo}
+	    	</if>
 	</select>
 	
-	<insert id="insertMember" parameterClass="hashmap">
+	<insert id="insertMember" parameterType="hashmap">
 		/* insertMember */
 		INSERT INTO
 			ally_mbr
@@ -87,14 +89,14 @@
 			)
 		VALUES
 			(
-				#loginID#,
-				#sex#,
-				#ageGroup#,
-				#companyNo#
+				#{loginID},
+				#{sex},
+				#{ageGroup},
+				#{companyNo}
 			)
 	</insert>
 	
-	<select id="selectMemberEmailCertificationInfo" parameterClass="hashmap" resultMap="memberEmailCrtInfoResultMap">
+	<select id="selectMemberEmailCertificationInfo" parameterType="hashmap" resultMap="memberEmailCrtInfoResultMap">
     	/* selectMemberEmailCertificationInfo */
     	SELECT
 			email_addr,
@@ -104,15 +106,15 @@
 			ally_mbr_email_crt
 		WHERE
 			1=1
-			<isNotEmpty prepend="AND"  property="loginID">
-	    		email_addr = #loginID#
-	    	</isNotEmpty>
-	    	<isNotEmpty prepend="AND"  property="certificationCode">
-	    		crt_cd = #certificationCode#
-	    	</isNotEmpty>
+			<if test="loginID != '' and loginID != null">
+	    		AND email_addr = #{loginID}
+	    	</if>
+	    	<if test="certificationCode != '' and certificationCode != null">
+	    		AND crt_cd = #{certificationCode}
+	    	</if>
 	</select>
 	
-	<select id="selectMemberEmailCertificationInfoCount" parameterClass="hashmap" resultClass="int">
+	<select id="selectMemberEmailCertificationInfoCount" parameterType="hashmap" resultType="int">
     	/* selectMemberEmailCertificationInfoCount */
     	SELECT
 			COUNT(*)
@@ -120,15 +122,15 @@
 			ally_mbr_email_crt
 		WHERE
 			1=1
-			<isNotEmpty prepend="AND"  property="loginID">
-	    		email_addr = #loginID#
-	    	</isNotEmpty>
-	    	<isNotEmpty prepend="AND"  property="certificationCode">
-	    		crt_cd = #certificationCode#
-	    	</isNotEmpty>
+			<if test="loginID != '' and loginID != null">
+	    		AND email_addr = #{loginID}
+	    	</if>
+	    	<if test="certificationCode != '' and certificationCode != null">
+	    		AND crt_cd = #{certificationCode}
+	    	</if>
 	</select>	
 	
-	<insert id="insertMemberEmailCertificationInfo" parameterClass="hashmap">
+	<insert id="insertMemberEmailCertificationInfo" parameterType="hashmap">
     	/* insertMemberEmailCertificationInfo */
     	INSERT INTO 
     		ally_mbr_email_crt
@@ -139,30 +141,31 @@
 			) 
     	VALUES 
     		(
-    			#loginID#,
-    			#certificationCode#,
+    			#{loginID},
+    			#{certificationCode},
 				SYSDATETIME
 			)
 	</insert>
 	
-	<update id="updateMemberEmailCertificationInfo" parameterClass="hashmap">
+	<update id="updateMemberEmailCertificationInfo" parameterType="hashmap">
     	/* updateMemberEmailCertificationInfo */
     	UPDATE
 			ally_mbr_email_crt
 		SET
-			email_addr = #loginID#,
-			crt_cd = #certificationCode#,
+			email_addr = #{loginID},
+			crt_cd = #{certificationCode},
 			crt_cd_isue_ymdt = SYSDATETIME
 		WHERE
-			email_addr = #loginID#
+			email_addr = #{loginID}
 	</update>
 	
-	<select id="selectCompanyList" parameterClass="hashmap" resultMap="companyResultMap">
+	<select id="selectCompanyList" parameterType="hashmap" resultMap="companyResultMap">
 		/* selectCompanyList */
 		SELECT 
 			co_no, 
-			co_nm 
+			co_nm,
+			(SELECT COUNT(dmn_nm) FROM ally_co_email_dmn WHERE co_no = co.co_no) AS dmn_cnt
 		FROM 
-			ally_co 
+			ally_co co
 	</select>
-</sqlMap>
+</mapper>

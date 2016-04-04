@@ -1,7 +1,6 @@
 package com.sx.ally.service.controller;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -112,7 +111,7 @@ public class AdminController {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		
 		List<Company> companyList = memberBO.getCompanyList(paramMap);
-		
+		model.addAttribute("companyList", companyList);
 		return "admin/member/companyList";
 	}
 	

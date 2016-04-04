@@ -23,7 +23,7 @@
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">회원관리 <b class="caret"></b></a>
         <ul class="dropdown-menu">
-        <li><a href="#">기업관리</a></li>
+        <li><a href="/ally/admin/member/co">기업관리</a></li>
         <li><a href="#">회원관리</a></li>
         </ul>
       </li>

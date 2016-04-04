@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com/DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
-<sqlMap namespace="affiliateShop">
-
-	<typeAlias alias="affiliateShop" type="com.sx.ally.service.model.AffiliateShop"/>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="affiliateShop">
 	
-	<resultMap id="affiliateShopResultMap" class="affiliateShop">
+	<resultMap id="affiliateShopResultMap" type="affiliateShop">
 	    <result property="affiliateShopNo" column="shop_no"/>
 	    <result property="affiliateShopName" column="shop_nm"/>
 	    <result property="representative" column="repr_nm"/>
@@ -37,7 +35,7 @@
 		FROM
 			ally_afflat_shop
 		WHERE
-	    	shop_no = #affiliateShopNo#
+	    	shop_no = #{affiliateShopNo}
 	</select>
 	
 	<select id="selectAffiliateShopList" resultMap="affiliateShopResultMap">
@@ -59,42 +57,42 @@
 			ally_afflat_shop
 		WHERE
 			1=1
-			<isNotEmpty prepend="AND"  property="affiliateShopNo">
-	    		shop_no = #affiliateShopNo#
-	    	</isNotEmpty>
-	    	<isNotEmpty prepend="AND"  property="affiliateShopName">
-	    		shop_nm = #affiliateShopName#
-	    	</isNotEmpty>
-	    	<isNotEmpty prepend="AND"  property="representative">
-	    		repr_nm = #representative#
-	    	</isNotEmpty>
-	    	<isNotEmpty prepend="AND"  property="shopCategoryCode">
-	    		shop_cat_cd = #shopCategoryCode#
-	    	</isNotEmpty>
-	    	<isNotEmpty prepend="AND"  property="telephoneNo">
-	    		tel_no = #telephoneNo#
-	    	</isNotEmpty>
-	    	<isNotEmpty prepend="AND"  property="cellphoneNo">
-	    		cph_no = #cellphoneNo#
-	    	</isNotEmpty>
-	    	<isNotEmpty prepend="AND"  property="loginID">
-	    		login_id = #loginID#
-	    	</isNotEmpty>
-	    	<isNotEmpty prepend="AND"  property="loginPassword">
-	    		login_pwd = #loginPassword#
-	    	</isNotEmpty>
-	    	<isNotEmpty prepend="AND"  property="productCount">
-	    		prod_cnt = #productCount#
-	    	</isNotEmpty>
-	    	<isNotEmpty prepend="AND"  property="lastLoginYmdt">
-	    		TO_CHAR(lst_login_ymdt,'YYYY-MM-DD') = #lastLoginYmdt#
-	    	</isNotEmpty>
-	    	<isNotEmpty prepend="AND"  property="affiliateShopStatusCode">
-	    		shop_stat_cd = #affiliateShopStatusCode#
-	    	</isNotEmpty>
+			<if test="affiliateShopNo != '' and affiliateShopNo != null">
+	    		AND shop_no = #{affiliateShopNo}
+	    	</if>
+	    	<if test="affiliateShopName != '' and affiliateShopName != null">
+	    		AND shop_nm = #{affiliateShopName}
+	    	</if>
+	    	<if test="representative != '' and representative != null">
+	    		AND repr_nm = #{representative}
+	    	</if>
+	    	<if test="shopCategoryCode != '' and shopCategoryCode != null">
+	    		AND shop_cat_cd = #{shopCategoryCode}
+	    	</if>
+	    	<if test="telephoneNo != '' and telephoneNo != null">
+	    		AND tel_no = #{telephoneNo}
+	    	</if>
+	    	<if test="cellphoneNo != '' and cellphoneNo != null">
+	    		AND cph_no = #{cellphoneNo}
+	    	</if>
+	    	<if test="loginID != '' and loginID != null">
+	    		AND login_id = #{loginID}
+	    	</if>
+	    	<if test="loginPassword != '' and loginPassword != null">
+	    		AND login_pwd = #{loginPassword}
+	    	</if>
+	    	<if test="productCount != '' and productCount != null">
+	    		AND prod_cnt = #{productCount}
+	    	</if>
+	    	<if test="lastLoginYmdt != '' and lastLoginYmdt != null">
+	    		AND TO_CHAR(lst_login_ymdt,'YYYY-MM-DD') = #{lastLoginYmdt}
+	    	</if>
+	    	<if test="affiliateShopStatusCode != '' and affiliateShopStatusCode != null">
+	    		AND shop_stat_cd = #{affiliateShopStatusCode}
+	    	</if>
 	</select>
 	
-	<insert id="insertAffiliateShop" parameterClass="hashmap">
+	<insert id="insertAffiliateShop" parameterType="hashmap">
 		/* insertAffiliateShop */
 		INSERT INTO
 			ally_afflat_shop (
@@ -112,13 +110,13 @@
 			)
 		VALUES
 			(
-				#affiliateShopName#,
-				#representative#,
-				#shopCategoryCode#,
-				#telephoneNo#,
-				#cellphoneNo#,
-				#loginID#,
-				#loginPassword#,
+				#{affiliateShopName},
+				#{representative},
+				#{shopCategoryCode},
+				#{telephoneNo},
+				#{cellphoneNo},
+				#{loginID},
+				#{loginPassword},
 				0,
 				NULL,
 				'WAIT',
@@ -126,23 +124,23 @@
 			)
 	</insert>
 	
-	<update id="updateShopStatusCode" parameterClass="hashmap">
+	<update id="updateShopStatusCode" parameterType="hashmap">
 		/* updateShopStatusCode */
 		UPDATE
 			ally_afflat_shop
 		SET
-			shop_stat_cd = #affiliateShopStatusCode#
+			shop_stat_cd = #{affiliateShopStatusCode}
 		WHERE
-			shop_no = #affiliateShopNo#
+			shop_no = #{affiliateShopNo}
 	</update>
 	
-	<update id="updateShopProductCount" parameterClass="hashmap">
+	<update id="updateShopProductCount" parameterType="hashmap">
 		/* updateShopProductCount */
 		UPDATE
 			ally_afflat_shop
 		SET
-			prod_cnt = #productCount#
+			prod_cnt = #{productCount}
 		WHERE
-			shop_no = #affiliateShopNo#
+			shop_no = #{affiliateShopNo}
 	</update>
-</sqlMap>
+</mapper>

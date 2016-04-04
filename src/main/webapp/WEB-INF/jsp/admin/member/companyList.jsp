@@ -18,53 +18,8 @@
 <script type="text/javascript" src="http://knit.naver.com/dist/js/knit.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-	$("#selSearchCondition").change(function() {
-		var searchCondition = $("#selSearchCondition option:selected").val();
-		
-		var $txtSeachValue = $("#txtSeachValue");
-		if (searchCondition == "") {
-			$txtSeachValue.prop("disabled", true);
-			$txtSeachValue.val("");
-		} else {
-			$txtSeachValue.prop("disabled", false);
-		}
-	});
 	
-	$("#btnSearch").click(function() {		
-		document.location.href = "list" + getParamString();
-	});
-	
-
 });
-
-function init() {
-	var searchCondition = "${searchCondition}";
-	$("#selSearchCondition option").each(function() {
-		var $option = $(this);
-		if ($option.val() == searchCondition) {
-			$option.prop("selected", true);
-			return;
-		} 
-	});
-	$("#txtSeachValue").val("${seachValue}");
-	$("#selShopCategoryCode option[value=${shopCategoryCode}]").prop("selected", true);
-	$("#selAffiliateShopStatusCode option[value=${affiliateShopStatusCode}]").prop("selected", true);
-}
-
-function getParamString() {
-	var searchCondition = $("#selSearchCondition option:selected").val();
-	var searchValue = $("#txtSeachValue").val();
-	var shopCategoryCode = $("#selShopCategoryCode option:selected").val();
-	var affiliateShopStatusCode = $("#selAffiliateShopStatusCode option:selected").val();
-	
-	var paramString = "?searchCondition=" + searchCondition +
-					  "&searchValue=" + escape(encodeURIComponent(searchValue)) +
-					  "&" + searchCondition + "=" + escape(encodeURIComponent(searchValue)) +
-					  "&shopCategoryCode=" + shopCategoryCode
-					  "&affiliateShopStatusCode=" + affiliateShopStatusCode;
-	
-	return paramString;
-}
 </script>
 <style type="text/css">
 tbody tr {background-color: white;}
@@ -89,12 +44,6 @@ tbody tr {background-color: white;}
 											<td style="width:85px;">
 												<select id="selSearchCondition">
 													<option value="">전체</option>
-													<option value="affiliateShopNo">업체번호</option>
-													<option value="affiliateShopName">업체이름</option>
-													<option value="representative">대표자</option>
-													<option value="telephoneNo">전화번호</option>
-													<option value="cellphoneNo">휴대폰번호</option>
-													<option value="loginID">로그인ID</option>
 												</select>
 											</td>
 											<td style="width:150px;">
@@ -130,32 +79,18 @@ tbody tr {background-color: white;}
 				<table class="table" style="text-align: center;">
 					<thead>
 						<tr>
-							<th style="text-align: center;">업체번호</th>
-							<th style="text-align: center;">업체이름</th>
-							<th style="text-align: center;">대표자</th>
-							<th style="text-align: center;">업체분류</th>
-							<th style="text-align: center;">전화번호</th>
-							<th style="text-align: center;">핸드폰번호</th>
-							<th style="text-align: center;">로그인ID</th>
-							<th style="text-align: center;">등록상품개수</th>
-							<th style="text-align: center;">상태</th>
+							<th style="text-align: center;">기업번호</th>
+							<th style="text-align: center;">기업명</th>
+							<th style="text-align: center;">도메인</th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach items="${shopList}" var="shop">
-							<c:if test="${shop.affiliateShopStatusCode != 'WAIT'}">
+						<c:forEach items="${companyList}" var="company">
 							<tr onMouseOver="this.style.backgroundColor='#e5f1f9'" onMouseOut="this.style.backgroundColor=''">
-								<td>${shop.affiliateShopNo}</td>
-								<td>${shop.affiliateShopName}</td>
-								<td>${shop.representative}</td>
-								<td>${shop.shopCategoryCode}</td>
-								<td>${shop.telephoneNo}</td>
-								<td>${shop.cellphoneNo}</td>
-								<td>${shop.loginID}</td>
-								<td>${shop.productCount}</td>
-								<td>${shop.affiliateShopStatusCode}</td>
+								<td>${company.companyNo}</td>
+								<td>${company.companyName}</td>
+								<td>${company.domainCount}</td>
 							</tr>
-							</c:if>
 						</c:forEach>
 					</tbody>
 	            </table>

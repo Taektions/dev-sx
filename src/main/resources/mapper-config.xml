@@ -5,6 +5,7 @@
 		<typeAlias alias="affiliateShop" type="com.sx.ally.service.model.AffiliateShop"/>
 		<typeAlias alias="member" type="com.sx.ally.service.model.Member"/>
 		<typeAlias alias="memberEmailCertificationInfo" type="com.sx.ally.service.model.MemberEmailCertificationInfo"/>
+		<typeAlias alias="company" type="com.sx.ally.service.model.Company"/>
 		<typeAlias alias="product" type="com.sx.ally.service.model.Product"/>
 	</typeAliases>
 	
