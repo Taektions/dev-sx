@@ -117,6 +117,21 @@ public class AdminController {
 	
 	@RequestMapping(value = "/member/mbr")
 	public String getMemberList(Model model) {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		
+		List<Member> memberList = memberBO.getMemberList(paramMap);
+		model.addAttribute("memberList", memberList);
+		
 		return "admin/member/memberList";
+	}
+	
+	@RequestMapping(value = "/product/list")
+	public String getProductList(Model model) {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		
+		List<Product> productList = productBO.getProductList(paramMap);
+		model.addAttribute("productList", productList);		
+		
+		return "admin/product/productList";
 	}
 }

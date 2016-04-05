@@ -77,6 +77,6 @@ public class MemberDAOImpl implements MemberDAO{
 
 	@Override
 	public List<Company> selectCompanyList(Map<String, Object> paramMap) {
-		return allySqlMapClientTemplate.selectList(NAMESPACE + "selectCompanyList", paramMap);
+		return allySqlMapClientTemplate.selectList(NAMESPACE + "selectCompany", paramMap);
 	}	
 }

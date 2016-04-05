@@ -14,14 +14,10 @@
 	<mvc:annotation-driven />
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure
-	
 	Enables the Spring MVC @Controller programming model
-
 	Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 
-	<context:component-scan base-package="com.sx.ally" use-default-filters="false">
-		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"></context:include-filter>
-	</context:component-scan>
+	<context:component-scan base-package="com.sx.ally"/>
 	
 	<!-- 메일 발송을 위한 설정. ncloud vm에서는 메일 발송이 불가능해서 google smtp 서버를 이용함 -->
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">

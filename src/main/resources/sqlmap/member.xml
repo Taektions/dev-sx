@@ -159,13 +159,26 @@
 			email_addr = #{loginID}
 	</update>
 	
-	<select id="selectCompanyList" parameterType="hashmap" resultMap="companyResultMap">
-		/* selectCompanyList */
+	<select id="selectCompany" parameterType="hashmap" resultMap="companyResultMap">
+		/* selectCompany */
 		SELECT 
-			co_no, 
-			co_nm,
-			(SELECT COUNT(dmn_nm) FROM ally_co_email_dmn WHERE co_no = co.co_no) AS dmn_cnt
+			co.co_no AS co_no, 
+			co.co_nm AS co_nm,
+			(SELECT 
+				COUNT(dmn.dmn_nm) 
+			FROM 
+				ally_co_email_dmn dmn 
+			WHERE 
+				dmn.co_no = co.co_no) AS dmn_cnt
 		FROM 
 			ally_co co
+		WHERE
+			1=1
+			<if test="companyNo != '' and companyNo != null">
+	    		AND co.co_no = #{companyNo}
+	    	</if>
+			<if test="companyName != '' and companyName != null">
+	    		AND co.co_nm LIKE '%' || #{companyName} || '%'
+	    	</if>
 	</select>
 </mapper>

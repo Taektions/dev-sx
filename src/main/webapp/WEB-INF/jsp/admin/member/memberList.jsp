@@ -18,53 +18,8 @@
 <script type="text/javascript" src="http://knit.naver.com/dist/js/knit.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-	$("#selSearchCondition").change(function() {
-		var searchCondition = $("#selSearchCondition option:selected").val();
-		
-		var $txtSeachValue = $("#txtSeachValue");
-		if (searchCondition == "") {
-			$txtSeachValue.prop("disabled", true);
-			$txtSeachValue.val("");
-		} else {
-			$txtSeachValue.prop("disabled", false);
-		}
-	});
 	
-	$("#btnSearch").click(function() {		
-		document.location.href = "list" + getParamString();
-	});
-	
-
 });
-
-function init() {
-	var searchCondition = "${searchCondition}";
-	$("#selSearchCondition option").each(function() {
-		var $option = $(this);
-		if ($option.val() == searchCondition) {
-			$option.prop("selected", true);
-			return;
-		} 
-	});
-	$("#txtSeachValue").val("${seachValue}");
-	$("#selShopCategoryCode option[value=${shopCategoryCode}]").prop("selected", true);
-	$("#selAffiliateShopStatusCode option[value=${affiliateShopStatusCode}]").prop("selected", true);
-}
-
-function getParamString() {
-	var searchCondition = $("#selSearchCondition option:selected").val();
-	var searchValue = $("#txtSeachValue").val();
-	var shopCategoryCode = $("#selShopCategoryCode option:selected").val();
-	var affiliateShopStatusCode = $("#selAffiliateShopStatusCode option:selected").val();
-	
-	var paramString = "?searchCondition=" + searchCondition +
-					  "&searchValue=" + escape(encodeURIComponent(searchValue)) +
-					  "&" + searchCondition + "=" + escape(encodeURIComponent(searchValue)) +
-					  "&shopCategoryCode=" + shopCategoryCode
-					  "&affiliateShopStatusCode=" + affiliateShopStatusCode;
-	
-	return paramString;
-}
 </script>
 <style type="text/css">
 tbody tr {background-color: white;}
@@ -125,37 +80,45 @@ tbody tr {background-color: white;}
 					</thead>
 				</table>				
 				<div style="height:30px; margin-left:-10px; margin-right:-10px; margin-bottom:3px; background-color:#4A8ED8;" align="left">
-					<h3 style="color:#FFFFFF; padding-left:10px; padding-top:5px;">제휴업체 정보</h3>
+					<h3 style="color:#FFFFFF; padding-left:10px; padding-top:5px;">회원 정보</h3>
 				</div>
 				<table class="table" style="text-align: center;">
 					<thead>
 						<tr>
-							<th style="text-align: center;">업체번호</th>
-							<th style="text-align: center;">업체이름</th>
-							<th style="text-align: center;">대표자</th>
-							<th style="text-align: center;">업체분류</th>
-							<th style="text-align: center;">전화번호</th>
-							<th style="text-align: center;">핸드폰번호</th>
-							<th style="text-align: center;">로그인ID</th>
-							<th style="text-align: center;">등록상품개수</th>
-							<th style="text-align: center;">상태</th>
+							<th style="text-align: center;">회원번호</th>
+							<th colspan="2" style="text-align: center;">로그인ID</th>
+							<th colspan="1" style="text-align: center;">소속 회사명</th>		
+							<th style="text-align: center;">성별</th>
+							<th style="text-align: center;">연령대</th>						
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach items="${shopList}" var="shop">
-							<c:if test="${shop.affiliateShopStatusCode != 'WAIT'}">
-							<tr onMouseOver="this.style.backgroundColor='#e5f1f9'" onMouseOut="this.style.backgroundColor=''">
-								<td>${shop.affiliateShopNo}</td>
-								<td>${shop.affiliateShopName}</td>
-								<td>${shop.representative}</td>
-								<td>${shop.shopCategoryCode}</td>
-								<td>${shop.telephoneNo}</td>
-								<td>${shop.cellphoneNo}</td>
-								<td>${shop.loginID}</td>
-								<td>${shop.productCount}</td>
-								<td>${shop.affiliateShopStatusCode}</td>
-							</tr>
-							</c:if>
+						<c:forEach items="${memberList}" var="member">
+						<tr onMouseOver="this.style.backgroundColor='#e5f1f9'" onMouseOut="this.style.backgroundColor=''">
+							<td style="text-align: center;">${member.memberNo}</td>
+							<td colspan="2" style="text-align: center;">${member.loginID}</td>
+							<td colspan="1" style="text-align: center;">${member.companyName}</td>
+							<td style="text-align: center;">
+								<c:choose>
+									<c:when test="${member.sex eq 'male'}">남성</c:when>
+									<c:when test="${member.sex eq 'female'}">여성</c:when>
+									<c:otherwise>-</c:otherwise>
+								</c:choose>
+							</td>
+							<td style="text-align: center;">
+								<c:choose>
+									<c:when test="${member.ageGroup == 1}">10대</c:when>
+									<c:when test="${member.ageGroup == 2}">20대</c:when>
+									<c:when test="${member.ageGroup == 3}">30대</c:when>
+									<c:when test="${member.ageGroup == 4}">40대</c:when>
+									<c:when test="${member.ageGroup == 5}">50대</c:when>
+									<c:when test="${member.ageGroup == 6}">60대</c:when>
+									<c:when test="${member.ageGroup == 7}">70대</c:when>
+									<c:when test="${member.ageGroup == 8}">80대</c:when>
+									<c:otherwise>-</c:otherwise>
+								</c:choose>
+							</td>
+						</tr>
 						</c:forEach>
 					</tbody>
 	            </table>

@@ -44,6 +44,12 @@ tbody tr {background-color: white;}
 											<td style="width:85px;">
 												<select id="selSearchCondition">
 													<option value="">전체</option>
+													<option value="affiliateShopNo">업체번호</option>
+													<option value="affiliateShopName">업체이름</option>
+													<option value="representative">대표자</option>
+													<option value="telephoneNo">전화번호</option>
+													<option value="cellphoneNo">휴대폰번호</option>
+													<option value="loginID">로그인ID</option>
 												</select>
 											</td>
 											<td style="width:150px;">
@@ -74,23 +80,33 @@ tbody tr {background-color: white;}
 					</thead>
 				</table>				
 				<div style="height:30px; margin-left:-10px; margin-right:-10px; margin-bottom:3px; background-color:#4A8ED8;" align="left">
-					<h3 style="color:#FFFFFF; padding-left:10px; padding-top:5px;">기업 정보</h3>
+					<h3 style="color:#FFFFFF; padding-left:10px; padding-top:5px;">제휴 상품 정보</h3>
 				</div>
 				<table class="table" style="text-align: center;">
 					<thead>
 						<tr>
-							<th style="text-align: center;">기업번호</th>
-							<th style="text-align: center;">기업명</th>
-							<th style="text-align: center;">도메인</th>
+							<th style="text-align: center;">상품번호</th>
+							<th style="text-align: center;">상품명</th>
+							<th style="text-align: center;">상품분류</th>
+							<th style="text-align: center;">상품설명</th>
+							<th style="text-align: center;">제휴시작날짜</th>
+							<th style="text-align: center;">제휴종료날짜</th>
+							<th style="text-align: center;">할인률(%)</th>
+							<th style="text-align: center;">제휴업체번호</th>
 						</tr>
 					</thead>
-					<tbody>
-						<c:forEach items="${companyList}" var="company">
-							<tr onMouseOver="this.style.backgroundColor='#e5f1f9'" onMouseOut="this.style.backgroundColor=''">
-								<td>${company.companyNo}</td>
-								<td>${company.companyName}</td>
-								<td>${company.domainCount}</td>
-							</tr>
+					<tbody>						
+						<c:forEach items="${productList}" var="product">
+						<tr>
+							<td>${product.productNo}</td>
+							<td>${product.productName}</td>
+							<td>${product.categoryCode}</td>
+							<td>${product.producDescription}</td>
+							<td>${product.affiliateStartYmdt}</td>
+							<td>${product.affiliateEndYmdt}</td>
+							<td>${product.productDiscountPercent}</td>
+							<td>${product.affiliateShopNo}</td>
+						</tr>
 						</c:forEach>
 					</tbody>
 	            </table>
